@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard - mmfms</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="topbar">
+    <h1>mmfms — Memory-Mapped File Management System</h1>
+    <div>
+      <span class="who" id="whoami"></span>
+      <button class="btn-secondary" id="logoutBtn" style="margin-left:12px;">Log out</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <!-- Left column: file list + create -->
+    <div>
+      <div class="panel">
+        <h2>Your files</h2>
+        <ul class="file-list" id="fileList"></ul>
+      </div>
+      <div class="panel">
+        <h2>Create a file</h2>
+        <label>File name</label>
+        <input type="text" id="newName" placeholder="notes.txt">
+        <label>Mode</label>
+        <select id="newMode" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);background:var(--panel-2);color:var(--text);">
+          <option value="sample">Generate sample data (choose size)</option>
+          <option value="text">Type my own content</option>
+        </select>
+        <div id="sizeRow" style="margin-top:10px;">
+          <label>Size (bytes)</label>
+          <input type="number" id="newSize" value="4096" min="1" max="52428800">
+        </div>
+        <div id="contentRow" style="display:none; margin-top:10px;">
+          <label>Content</label>
+          <textarea id="newContent" rows="4"></textarea>
+        </div>
+        <button class="btn-primary full" id="createBtn" style="margin-top:14px;">Create</button>
+        <div id="createMsg" class="msg"></div>
+      </div>
+    </div>
+
+    <!-- Right column: operations on the selected file -->
+    <div>
+      <div class="panel" id="noFilePanel">
+        <div class="no-file">Select a file on the left, or create a new one, to get started.</div>
+      </div>
+
+      <div id="fileOpsPanel" style="display:none;">
+        <div class="panel">
+          <h2>Selected file: <span id="selName" style="color:var(--text)"></span></h2>
+          <div id="fileInfo" class="small"></div>
+        </div>
+
+        <div class="panel">
+          <div class="tabs">
+            <button class="tabbtn active" data-tab="read">Read</button>
+            <button class="tabbtn" data-tab="write">Write</button>
+            <button class="tabbtn" data-tab="append">Append</button>
+            <button class="tabbtn" data-tab="search">Search</button>
+            <button class="tabbtn" data-tab="danger">Delete / Download</button>
+          </div>
+
+          <div class="tabpane active" data-pane="read">
+            <div class="row">
+              <div><label>Offset</label><input type="number" id="readOffset" value="0"></div>
+              <div><label>Length</label><input type="number" id="readLength" value="256"></div>
+              <div><button class="btn-primary" id="readBtn">Read</button></div>
+            </div>
+            <pre class="output" id="readOutput">(no output yet)</pre>
+          </div>
+
+          <div class="tabpane" data-pane="write">
+            <div class="row">
+              <div><label>Offset</label><input type="number" id="writeOffset" value="0"></div>
+              <div style="flex:2;"><label>Text (overwrites in place)</label><input type="text" id="writeText"></div>
+              <div><button class="btn-primary" id="writeBtn">Write</button></div>
+            </div>
+            <div class="small">Write cannot extend past the end of the file — use Append to grow it.</div>
+            <pre class="output" id="writeOutput">(no output yet)</pre>
+          </div>
+
+          <div class="tabpane" data-pane="append">
+            <div class="row">
+              <div style="flex:2;"><label>Text to append</label><input type="text" id="appendText"></div>
+              <div><button class="btn-primary" id="appendBtn">Append</button></div>
+            </div>
+            <pre class="output" id="appendOutput">(no output yet)</pre>
+          </div>
+
+          <div class="tabpane" data-pane="search">
+            <div class="row">
+              <div style="flex:2;"><label>Search text</label><input type="text" id="searchText"></div>
+              <div><button class="btn-primary" id="searchBtn">Search</button></div>
+            </div>
+            <pre class="output" id="searchOutput">(no output yet)</pre>
+          </div>
+
+          <div class="tabpane" data-pane="danger">
+            <div class="row">
+              <div><a id="downloadLink" href="#"><button class="btn-secondary" type="button">Download file</button></a></div>
+              <div><button class="btn-danger" id="deleteBtn">Delete this file</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Your recent activity <span class="badge">this account only</span></h2>
+          <pre class="output" id="activityOutput">(no activity yet)</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

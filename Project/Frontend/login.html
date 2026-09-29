@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login - mmfms</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h1>mmfms</h1>
+      <p class="sub">Memory-Mapped File Management System — sign in</p>
+      <form id="loginForm">
+        <label for="username">Username</label>
+        <input type="text" id="username" autocomplete="username" required>
+        <label for="password">Password</label>
+        <input type="password" id="password" autocomplete="current-password" required>
+        <button class="btn-primary full" type="submit">Log in</button>
+        <div id="msg" class="msg"></div>
+      </form>
+      <div class="switch">Don't have an account? <a href="/signup.html">Sign up</a></div>
+    </div>
+  </div>
+  <script src="/js/login.js"></script>
+</body>
+</html>
